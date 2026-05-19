@@ -12,3 +12,11 @@ export interface NewNote {
   content: string;
   tag: string;
 }
+
+export const categories: string[] = [
+  "Work",
+  "Personal",
+  "Meeting",
+  "Shopping",
+  "Todo",
+];

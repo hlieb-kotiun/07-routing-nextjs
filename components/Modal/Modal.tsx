@@ -6,14 +6,14 @@ import css from "./Modal.module.css";
 import { useEffect } from "react";
 
 interface ModalProps {
-  onClose: () => void;
+  onClose?: () => void;
   children: React.ReactNode;
 }
 
 const Modal = ({ onClose, children }: ModalProps) => {
   useEffect(() => {
     const close = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") onClose?.();
     };
     addEventListener("keydown", close);
     document.body.style.overflow = "hidden";
@@ -26,7 +26,7 @@ const Modal = ({ onClose, children }: ModalProps) => {
 
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.currentTarget === event.target) {
-      onClose();
+      onClose?.();
     }
   };
 

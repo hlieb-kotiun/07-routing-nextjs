@@ -12,6 +12,22 @@ interface ApiResponse {
   totalPages: number;
 }
 
+export type Category = {
+  id: string;
+  name: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export const getCategories = async (category: string | undefined) => {
+  const res = await api<ApiResponse>("/notes", {
+    params: {
+      tag: category,
+    },
+  });
+  return res.data;
+};
 // Fetch all notes
 export const fetchNotes = async (
   query: string,
