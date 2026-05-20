@@ -20,10 +20,16 @@ export type Category = {
   updatedAt: string;
 };
 
-export const getCategories = async (category: string | undefined) => {
+export const fetchNotesByCategories = async (
+  category: string | undefined,
+  query: string,
+  page: number,
+) => {
   const res = await api<ApiResponse>("/notes", {
     params: {
       tag: category,
+      search: query,
+      page,
     },
   });
   return res.data;
