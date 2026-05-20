@@ -1,4 +1,4 @@
-import { fetchNotesByCategories } from "@/lib/api";
+import { fetchNotes } from "@/lib/api";
 import {
   dehydrate,
   HydrationBoundary,
@@ -18,13 +18,13 @@ export default async function NotesFilter({ params }: Props) {
 
   queryClient.prefetchQuery({
     queryKey: ["notes", category],
-    queryFn: () => fetchNotesByCategories(category, "", 1),
+    queryFn: () => fetchNotes(category, "", 1),
   });
 
   return (
     <div>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <NotesClient />
+        <NotesClient tag={category} />
       </HydrationBoundary>
     </div>
   );

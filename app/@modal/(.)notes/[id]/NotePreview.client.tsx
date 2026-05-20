@@ -23,12 +23,14 @@ const NotePreview = () => {
     placeholderData: keepPreviousData,
   });
 
+  const handleCloseModal = () => router.back();
+
   return (
     <div className={css.container}>
       {isLoading && <p>Loading...</p>}
       {isError && <p>Something went wrong.</p>}
       {note && (
-        <Modal>
+        <Modal onClose={handleCloseModal}>
           <div className={css.item}>
             <div className={css.header}>
               <h2>{note.title}</h2>
@@ -36,7 +38,7 @@ const NotePreview = () => {
             <p className={css.tag}>{note.tag}</p>
             <p className={css.content}>{note.content}</p>
             <p className={css.date}>{note.createdAt}</p>
-            <button className={css.backBtn} onClick={() => router.back()}>
+            <button className={css.backBtn} onClick={handleCloseModal}>
               Close
             </button>
           </div>

@@ -12,36 +12,16 @@ interface ApiResponse {
   totalPages: number;
 }
 
-export type Category = {
-  id: string;
-  name: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export const fetchNotesByCategories = async (
-  category: string | undefined,
-  query: string,
-  page: number,
-) => {
-  const res = await api<ApiResponse>("/notes", {
-    params: {
-      tag: category,
-      search: query,
-      page,
-    },
-  });
-  return res.data;
-};
 // Fetch all notes
 export const fetchNotes = async (
+  tag: string | undefined,
   query: string,
   page: number,
 ): Promise<ApiResponse> => {
   try {
     const { data } = await api.get<ApiResponse>("/notes", {
       params: {
+        tag,
         search: query,
         page,
       },
@@ -70,8 +50,8 @@ export const createNote = async (data: NewNote): Promise<Note> => {
 // Fetch note by id
 export const fetchNoteById = async (id: string): Promise<Note> => {
   try {
-    const res = api.get<Note>(`/notes/${id}`);
-    return (await res).data;
+    const res = await api.get<Note>(`/notes/${id}`);
+    return res.data;
   } catch (error) {
     throw new Error("Something went wrong by fetching note!", {
       cause: error,

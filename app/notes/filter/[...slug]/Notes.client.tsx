@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import css from "./NotesPage.module.css";
-import { fetchNotesByCategories } from "@/lib/api";
+import { fetchNotes } from "@/lib/api";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import NoteList from "@/components/NoteList/NoteList";
 import Pagination from "@/components/Pagination/Pagination";
@@ -10,21 +10,20 @@ import { useDebouncedCallback } from "use-debounce";
 import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import SearchBox from "@/components/SearchBox/SearchBox";
-import { useParams } from "next/navigation";
 
-function NotesClient() {
+interface NotesClientProps {
+  tag: string | undefined;
+}
+
+function NotesClient({ tag }: NotesClientProps) {
   const [query, setQuery] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { slug } = useParams();
-
-  const category = slug?.[0] === "all" ? undefined : slug?.[0];
-
   const { data, isLoading, error, isError } = useQuery({
-    queryKey: ["notes", category, query, page],
+    queryKey: ["notes", tag, query, page],
     queryFn: () => {
-      return fetchNotesByCategories(category, query, page);
+      return fetchNotes(tag, query, page);
     },
     placeholderData: keepPreviousData,
   });
@@ -70,7 +69,11 @@ function NotesClient() {
       </header>
       {isLoading && <p>Loading...</p>}
       {isError && <p>An error occurred: {error.message}</p>}
-      {hasNotes && <NoteList notes={data?.notes} />}
+      {hasNotes ? (
+        <NoteList notes={data?.notes} />
+      ) : (
+        <p>There is no notes in this category!</p>
+      )}
       {isModalOpen && (
         <Modal onClose={handleModalClose}>
           <NoteForm onClose={handleModalClose} />

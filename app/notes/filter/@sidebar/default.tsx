@@ -7,9 +7,9 @@ const SidebarNotes = () => {
     <div>
       <ul className={css.menuList}>
         <li className={css.menuItem}>
-          <a href={`/notes/filter/all`} className={css.menuLink}>
+          <Link href={`/notes/filter/all`} className={css.menuLink}>
             All notes
-          </a>
+          </Link>
         </li>
         {categories.map((category, indx) => (
           <li key={`${category}-${indx}`} className={css.menuItem}>

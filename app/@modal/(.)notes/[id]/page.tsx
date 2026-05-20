@@ -12,12 +12,11 @@ interface PageProps {
 
 const page = async ({ params }: PageProps) => {
   const { id } = await params;
-  const note = await fetchNoteById(id);
 
   const queryClient = new QueryClient();
 
   queryClient.prefetchQuery({
-    queryKey: [note, id],
+    queryKey: ["note", id],
     queryFn: () => fetchNoteById(id),
   });
 
