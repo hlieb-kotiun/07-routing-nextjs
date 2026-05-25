@@ -13,6 +13,12 @@ export interface NewNote {
   tag: string;
 }
 
+export interface NoteDraft {
+  title: string;
+  content: string;
+  tag: string;
+}
+
 export const categories: string[] = [
   "Work",
   "Personal",

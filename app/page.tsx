@@ -1,3 +1,4 @@
+import Image from "next/image";
 import css from "./page.module.css";
 export default function Home() {
   return (
@@ -16,6 +17,12 @@ export default function Home() {
             organization, NoteHub offers a streamlined experience for anyone who
             values clarity and productivity.
           </p>
+          <Image
+            src="https://picsum.photos/seed/picsum/300/300"
+            alt="test"
+            width={300}
+            height={300}
+          />
         </div>
       </main>
     </div>
